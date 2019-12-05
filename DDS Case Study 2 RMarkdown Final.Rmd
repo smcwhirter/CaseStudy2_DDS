@@ -260,7 +260,7 @@ Case2PredictionsSeanMcWhirter_Attrition<-Case2PredictionsSeanMcWhirter_Attrition
 #Confirm it worked and get final column numbers
 #str(work)
 #str(Case2PredictionsSeanMcWhirter_Attrition)
-#skim(work_norm2)
+
 
 ```
 
@@ -357,9 +357,6 @@ plot(results, type=c("g", "o"))
 set.seed(100)
 splitPerc = .70
 
-##If we needed to ensure we are omitting NAs
-#work <- work_norm2 %>% na.omit() 
-
 #test/train split
 trainIndices = sample(1:dim(work)[1],round(splitPerc * dim(work)[1]))
 train = work[trainIndices,]
@@ -422,9 +419,9 @@ masterSpec=matrix(nrow=iterations, ncol=numks)
 for(j in 1:iterations)
 {
 accs=data.frame(accuracy=numeric(30), k=numeric(30))
-trainIndicies=sample(1:dim(work_norm)[1],round(splitPerc*dim(work_norm)[1]))
-train=work_norm2[trainIndicies,]
-test=work_norm2[-trainIndicies,]
+trainIndicies=sample(1:dim(work)[1],round(splitPerc*dim(work)[1]))
+train=work[trainIndicies,]
+test=work[-trainIndicies,]
 for(i in 1:numks)
 {
 classifications=knn(train[,c(var1, var2, var3, var4, var5, var6)], test[,c(var1, var2, var3, var4, var5, var6)], train$Attrition, prob=TRUE, k=i)
