@@ -2,7 +2,9 @@
 title: "DDS Case Study 2 RMarkdown"
 author: "Sean McWhirter"
 date: "11/30/2019"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 Hello and thank you for providing the opportunity to provide my insight on this challenge that the company is facing.  We will walk through the data set that was provided, look at some of the variables, build a classification model tha twill tell us the liklihood of an employee leaving, and finally, we will use linear regression to predict th monthly income of a set of employees.  
