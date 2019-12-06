@@ -1,0 +1,2542 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={DDS Case Study 2 RMarkdown},
+            pdfauthor={Sean McWhirter},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{DDS Case Study 2 RMarkdown}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Sean McWhirter}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{11/30/2019}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\begin{document}
+\maketitle
+
+Hello and thank you for providing the opportunity to provide my insight
+on this challenge that the company is facing. We will walk through the
+data set that was provided, look at some of the variables, build a
+classification model tha twill tell us the liklihood of an employee
+leaving, and finally, we will use linear regression to predict th
+monthly income of a set of employees.
+
+\#Upload data and take first look
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#File Upload}
+\NormalTok{work=}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"C:/Users/seans/Desktop/DDS/Unit 14 and 15 Case Study 2/CaseStudy2-data.csv"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep=}\StringTok{","}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{#File for Classification Predictions}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition=}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"C:/Users/seans/Desktop/DDS/Unit 14 and 15 Case Study 2/CaseStudy2CompSet No Attrition.csv"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep=}\StringTok{","}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{#File for Linear Regression Predictions}
+\NormalTok{Case2PredictionsSeanMcWhirter=}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"C:/Users/seans/Desktop/DDS/Unit 14 and 15 Case Study 2/CaseStudy2CompSetNoSalary.csv"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep=}\StringTok{","}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{#Packages Used}
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------------------------------------------------------------------------------------------------------------------------------------- tidyverse 1.2.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.2.1     v purrr   0.3.3
+## v tibble  2.1.3     v dplyr   0.8.3
+## v tidyr   1.0.0     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.4.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(GGally)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'GGally'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     nasa
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggthemes)}
+\KeywordTok{library}\NormalTok{(doBy)}
+\KeywordTok{library}\NormalTok{(e1071)}
+\KeywordTok{library}\NormalTok{(kableExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'kableExtra'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     group_rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(mlbench)}
+\KeywordTok{library}\NormalTok{(maps)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'maps'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     map
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(openintro)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Please visit openintro.org for free statistics materials
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'openintro'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggplot2':
+## 
+##     diamonds
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:datasets':
+## 
+##     cars, trees
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(stringr)}
+\KeywordTok{library}\NormalTok{(usmap)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(class)}
+\KeywordTok{library}\NormalTok{(e1071)}
+\KeywordTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lattice'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:openintro':
+## 
+##     lsegments
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'caret'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:openintro':
+## 
+##     dotPlot
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     lift
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(mlbench)}
+\KeywordTok{library}\NormalTok{(caret)}
+\KeywordTok{library}\NormalTok{(mlr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ParamHelpers
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'mlr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:caret':
+## 
+##     train
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:openintro':
+## 
+##     bac
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:e1071':
+## 
+##     impute
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(gplots)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'gplots'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     lowess
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(randomForest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## randomForest 4.6-14
+\end{verbatim}
+
+\begin{verbatim}
+## Type rfNews() to see new features/changes/bug fixes.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'randomForest'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggplot2':
+## 
+##     margin
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(plyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -------------------------------------------------------------------------
+\end{verbatim}
+
+\begin{verbatim}
+## You have loaded plyr after dplyr - this is likely to cause problems.
+## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+## library(plyr); library(dplyr)
+\end{verbatim}
+
+\begin{verbatim}
+## -------------------------------------------------------------------------
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'plyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:maps':
+## 
+##     ozone
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     compact
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(corrplot) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## corrplot 0.84 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(purrr)}
+\KeywordTok{library}\NormalTok{(skimr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'skimr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:knitr':
+## 
+##     kable
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:kableExtra':
+## 
+##     kable
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(work)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    870 obs. of  36 variables:
+##  $ ID                      : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Age                     : int  32 40 35 32 24 27 41 37 34 34 ...
+##  $ Attrition               : Factor w/ 2 levels "No","Yes": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ BusinessTravel          : Factor w/ 3 levels "Non-Travel","Travel_Frequently",..: 3 3 2 3 2 2 3 3 3 2 ...
+##  $ DailyRate               : int  117 1308 200 801 567 294 1283 309 1333 653 ...
+##  $ Department              : Factor w/ 3 levels "Human Resources",..: 3 2 2 3 2 2 2 3 3 2 ...
+##  $ DistanceFromHome        : int  13 14 18 1 2 10 5 10 10 10 ...
+##  $ Education               : int  4 3 2 4 1 2 5 4 4 4 ...
+##  $ EducationField          : Factor w/ 6 levels "Human Resources",..: 2 4 2 3 6 2 4 2 2 6 ...
+##  $ EmployeeCount           : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ EmployeeNumber          : int  859 1128 1412 2016 1646 733 1448 1105 1055 1597 ...
+##  $ EnvironmentSatisfaction : int  2 3 3 3 1 4 2 4 3 4 ...
+##  $ Gender                  : Factor w/ 2 levels "Female","Male": 2 2 2 1 1 2 2 1 1 2 ...
+##  $ HourlyRate              : int  73 44 60 48 32 32 90 88 87 92 ...
+##  $ JobInvolvement          : int  3 2 3 3 3 3 4 2 3 2 ...
+##  $ JobLevel                : int  2 5 3 3 1 3 1 2 1 2 ...
+##  $ JobRole                 : Factor w/ 9 levels "Healthcare Representative",..: 8 6 5 8 7 5 7 8 9 1 ...
+##  $ JobSatisfaction         : int  4 3 4 4 4 1 3 4 3 3 ...
+##  $ MaritalStatus           : Factor w/ 3 levels "Divorced","Married",..: 1 3 3 2 3 1 2 1 2 2 ...
+##  $ MonthlyIncome           : int  4403 19626 9362 10422 3760 8793 2127 6694 2220 5063 ...
+##  $ MonthlyRate             : int  9250 17544 19944 24032 17218 4809 5561 24223 18410 15332 ...
+##  $ NumCompaniesWorked      : int  2 1 2 1 1 1 2 2 1 1 ...
+##  $ Over18                  : Factor w/ 1 level "Y": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ OverTime                : Factor w/ 2 levels "No","Yes": 1 1 1 1 2 1 2 2 2 1 ...
+##  $ PercentSalaryHike       : int  11 14 11 19 13 21 12 14 19 14 ...
+##  $ PerformanceRating       : int  3 3 3 3 3 4 3 3 3 3 ...
+##  $ RelationshipSatisfaction: int  3 1 3 3 3 3 1 3 4 2 ...
+##  $ StandardHours           : int  80 80 80 80 80 80 80 80 80 80 ...
+##  $ StockOptionLevel        : int  1 0 0 2 0 2 0 3 1 1 ...
+##  $ TotalWorkingYears       : int  8 21 10 14 6 9 7 8 1 8 ...
+##  $ TrainingTimesLastYear   : int  3 2 2 3 2 4 5 5 2 3 ...
+##  $ WorkLifeBalance         : int  2 4 3 3 3 2 2 3 3 2 ...
+##  $ YearsAtCompany          : int  5 20 2 14 6 9 4 1 1 8 ...
+##  $ YearsInCurrentRole      : int  2 7 2 10 3 7 2 0 1 2 ...
+##  $ YearsSinceLastPromotion : int  0 4 2 5 1 1 0 0 0 7 ...
+##  $ YearsWithCurrManager    : int  3 9 2 7 3 7 3 0 0 7 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{skim}\NormalTok{(work)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Skim summary statistics
+##  n obs: 870 
+##  n variables: 36 
+## 
+## -- Variable type:factor --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+##        variable missing complete   n n_unique
+##       Attrition       0      870 870        2
+##  BusinessTravel       0      870 870        3
+##      Department       0      870 870        3
+##  EducationField       0      870 870        6
+##          Gender       0      870 870        2
+##         JobRole       0      870 870        9
+##   MaritalStatus       0      870 870        3
+##          Over18       0      870 870        1
+##        OverTime       0      870 870        2
+##                             top_counts ordered
+##               No: 730, Yes: 140, NA: 0   FALSE
+##     Tra: 618, Tra: 158, Non: 94, NA: 0   FALSE
+##     Res: 562, Sal: 273, Hum: 35, NA: 0   FALSE
+##  Lif: 358, Med: 270, Mar: 100, Tec: 75   FALSE
+##              Mal: 516, Fem: 354, NA: 0   FALSE
+##  Sal: 200, Res: 172, Lab: 153, Man: 87   FALSE
+##    Mar: 410, Sin: 269, Div: 191, NA: 0   FALSE
+##                          Y: 870, NA: 0   FALSE
+##               No: 618, Yes: 252, NA: 0   FALSE
+## 
+## -- Variable type:integer -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+##                  variable missing complete   n     mean      sd   p0
+##                       Age       0      870 870    36.83    8.93   18
+##                 DailyRate       0      870 870   815.23  401.12  103
+##          DistanceFromHome       0      870 870     9.34    8.14    1
+##                 Education       0      870 870     2.9     1.02    1
+##             EmployeeCount       0      870 870     1       0       1
+##            EmployeeNumber       0      870 870  1029.83  604.79    1
+##   EnvironmentSatisfaction       0      870 870     2.7     1.1     1
+##                HourlyRate       0      870 870    65.61   20.13   30
+##                        ID       0      870 870   435.5   251.29    1
+##            JobInvolvement       0      870 870     2.72    0.7     1
+##                  JobLevel       0      870 870     2.04    1.09    1
+##           JobSatisfaction       0      870 870     2.71    1.11    1
+##             MonthlyIncome       0      870 870  6390.26 4597.7  1081
+##               MonthlyRate       0      870 870 14325.62 7108.38 2094
+##        NumCompaniesWorked       0      870 870     2.73    2.52    0
+##         PercentSalaryHike       0      870 870    15.2     3.68   11
+##         PerformanceRating       0      870 870     3.15    0.36    3
+##  RelationshipSatisfaction       0      870 870     2.71    1.1     1
+##             StandardHours       0      870 870    80       0      80
+##          StockOptionLevel       0      870 870     0.78    0.86    0
+##         TotalWorkingYears       0      870 870    11.05    7.51    0
+##     TrainingTimesLastYear       0      870 870     2.83    1.27    0
+##           WorkLifeBalance       0      870 870     2.78    0.71    1
+##            YearsAtCompany       0      870 870     6.96    6.02    0
+##        YearsInCurrentRole       0      870 870     4.2     3.64    0
+##   YearsSinceLastPromotion       0      870 870     2.17    3.19    0
+##      YearsWithCurrManager       0      870 870     4.14    3.57    0
+##      p25     p50      p75  p100     hist
+##    30       35      43       60 <U+2581><U+2583><U+2586><U+2587><U+2585><U+2583><U+2582><U+2582>
+##   472.5    817.5  1165.75  1499 <U+2586><U+2586><U+2587><U+2587><U+2587><U+2586><U+2587><U+2587>
+##     2        7      14       29 <U+2587><U+2585><U+2583><U+2581><U+2581><U+2581><U+2581><U+2581>
+##     2        3       4        5 <U+2582><U+2585><U+2581><U+2587><U+2581><U+2586><U+2581><U+2581>
+##     1        1       1        1 <U+2581><U+2581><U+2581><U+2587><U+2581><U+2581><U+2581><U+2581>
+##   477.25  1039    1561.5   2064 <U+2587><U+2587><U+2586><U+2587><U+2587><U+2587><U+2587><U+2587>
+##     2        3       4        4 <U+2585><U+2581><U+2586><U+2581><U+2581><U+2587><U+2581><U+2587>
+##    48       66      83      100 <U+2586><U+2587><U+2587><U+2587><U+2586><U+2587><U+2587><U+2587>
+##   218.25   435.5   652.75   870 <U+2587><U+2587><U+2587><U+2587><U+2587><U+2587><U+2587><U+2587>
+##     2        3       3        4 <U+2581><U+2581><U+2583><U+2581><U+2581><U+2587><U+2581><U+2581>
+##     1        2       3        5 <U+2587><U+2587><U+2581><U+2583><U+2581><U+2582><U+2581><U+2581>
+##     2        3       4        4 <U+2585><U+2581><U+2585><U+2581><U+2581><U+2587><U+2581><U+2587>
+##  2839.5   4945.5  8182    19999 <U+2587><U+2587><U+2583><U+2582><U+2581><U+2581><U+2581><U+2581>
+##  8092    14074.5 20456.25 26997 <U+2586><U+2587><U+2587><U+2587><U+2587><U+2586><U+2587><U+2586>
+##     1        2       4        9 <U+2587><U+2582><U+2582><U+2582><U+2581><U+2581><U+2581><U+2581>
+##    12       14      18       25 <U+2587><U+2587><U+2583><U+2583><U+2581><U+2582><U+2582><U+2581>
+##     3        3       3        4 <U+2587><U+2581><U+2581><U+2581><U+2581><U+2581><U+2581><U+2582>
+##     2        3       4        4 <U+2585><U+2581><U+2585><U+2581><U+2581><U+2587><U+2581><U+2587>
+##    80       80      80       80 <U+2581><U+2581><U+2581><U+2587><U+2581><U+2581><U+2581><U+2581>
+##     0        1       1        3 <U+2587><U+2581><U+2587><U+2581><U+2581><U+2582><U+2581><U+2581>
+##     6       10      15       40 <U+2585><U+2587><U+2582><U+2582><U+2581><U+2581><U+2581><U+2581>
+##     2        3       3        6 <U+2581><U+2581><U+2587><U+2587><U+2581><U+2582><U+2582><U+2581>
+##     2        3       3        4 <U+2581><U+2581><U+2583><U+2581><U+2581><U+2587><U+2581><U+2582>
+##     3        5      10       40 <U+2587><U+2585><U+2581><U+2581><U+2581><U+2581><U+2581><U+2581>
+##     2        3       7       18 <U+2587><U+2582><U+2581><U+2585><U+2581><U+2581><U+2581><U+2581>
+##     0        1       3       15 <U+2587><U+2582><U+2581><U+2581><U+2581><U+2581><U+2581><U+2581>
+##     2        3       7       17 <U+2587><U+2582><U+2581><U+2583><U+2581><U+2581><U+2581><U+2581>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{count}\NormalTok{(work}\OperatorTok{$}\NormalTok{Attrition)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     x freq
+## 1  No  730
+## 2 Yes  140
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Check for missing values}
+\KeywordTok{colSums}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(work))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                       ID                      Age                Attrition 
+##                        0                        0                        0 
+##           BusinessTravel                DailyRate               Department 
+##                        0                        0                        0 
+##         DistanceFromHome                Education           EducationField 
+##                        0                        0                        0 
+##            EmployeeCount           EmployeeNumber  EnvironmentSatisfaction 
+##                        0                        0                        0 
+##                   Gender               HourlyRate           JobInvolvement 
+##                        0                        0                        0 
+##                 JobLevel                  JobRole          JobSatisfaction 
+##                        0                        0                        0 
+##            MaritalStatus            MonthlyIncome              MonthlyRate 
+##                        0                        0                        0 
+##       NumCompaniesWorked                   Over18                 OverTime 
+##                        0                        0                        0 
+##        PercentSalaryHike        PerformanceRating RelationshipSatisfaction 
+##                        0                        0                        0 
+##            StandardHours         StockOptionLevel        TotalWorkingYears 
+##                        0                        0                        0 
+##    TrainingTimesLastYear          WorkLifeBalance           YearsAtCompany 
+##                        0                        0                        0 
+##       YearsInCurrentRole  YearsSinceLastPromotion     YearsWithCurrManager 
+##                        0                        0                        0
+\end{verbatim}
+
+\#Here is a quick way we can visualize the data that was provided. This
+will give us the starting point to begin our analysis. \#What we are
+looking for are variables where attirition stands out from the
+non-attrition values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Automated EDA}
+\CommentTok{# step 1, save target variable name}
+
+\NormalTok{target <-}\StringTok{ "Attrition"}
+\CommentTok{# step 2, save explanator variable names}
+\NormalTok{numvars <-}\StringTok{ }\NormalTok{work }\OperatorTok{%>%}\StringTok{ }\KeywordTok{keep}\NormalTok{(is.numeric) }\OperatorTok{%>%}\StringTok{ }\NormalTok{colnames}
+
+
+\NormalTok{numplot <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(df, explan, resp) \{}
+  \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{(}\KeywordTok{aes_string}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ explan, }\DataTypeTok{fill =}\NormalTok{ resp), }\DataTypeTok{alpha =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{\}}
+
+\KeywordTok{numplot}\NormalTok{(work, }\DataTypeTok{explan =} \StringTok{"MonthlyIncome"}\NormalTok{, }\DataTypeTok{resp =} \StringTok{"Attrition"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{numplot}\NormalTok{(work, }\DataTypeTok{explan =} \StringTok{"MonthlyIncome"}\NormalTok{, }\DataTypeTok{resp =} \StringTok{"Attrition"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-2-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plotlist <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(numvars, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{numplot}\NormalTok{(work, x, }\StringTok{"Attrition"}\NormalTok{))}
+
+
+\KeywordTok{png}\NormalTok{()}
+\KeywordTok{lapply}\NormalTok{(numvars, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{numplot}\NormalTok{(work, x, }\StringTok{"Attrition"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[2]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[3]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[4]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[5]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[6]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[7]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[8]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[9]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[10]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[11]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[12]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[13]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[14]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[15]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[16]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[17]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[18]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[19]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[20]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[21]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[22]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[23]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[24]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[25]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[26]]
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## [[27]]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(cowplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ********************************************************
+\end{verbatim}
+
+\begin{verbatim}
+## Note: As of version 1.0.0, cowplot does not change the
+\end{verbatim}
+
+\begin{verbatim}
+##   default ggplot2 theme anymore. To recover the previous
+\end{verbatim}
+
+\begin{verbatim}
+##   behavior, execute:
+##   theme_set(theme_cowplot())
+\end{verbatim}
+
+\begin{verbatim}
+## ********************************************************
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'cowplot'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggthemes':
+## 
+##     theme_map
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot_grid}\NormalTok{(}\DataTypeTok{plotlist =}\NormalTok{ plotlist)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-2-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# categorical vs categorical}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ work) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ MonthlyIncome, }\DataTypeTok{fill =}\NormalTok{ Attrition), }\DataTypeTok{position =} \StringTok{"fill"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.9}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{coord_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-2-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ones <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(work))}
+\NormalTok{zeroes <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(work))}
+\NormalTok{onezeroes <-}\StringTok{ }\KeywordTok{c}\NormalTok{(ones, zeroes)}
+
+\NormalTok{work}\OperatorTok{$}\NormalTok{rcat <-}\StringTok{ }\KeywordTok{sample}\NormalTok{(onezeroes, }\KeywordTok{nrow}\NormalTok{(work))}
+
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ work) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ MonthlyIncome, }\DataTypeTok{fill =}\NormalTok{ Attrition), }\DataTypeTok{position =} \StringTok{"fill"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.9}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{coord_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-2-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# step 1: Name target variable:}
+
+\NormalTok{target <-}\StringTok{ "Attrition"}
+
+\CommentTok{# step 2: name explanatory vars}
+
+\NormalTok{expls <-}\StringTok{ }\NormalTok{work }\OperatorTok{%>%}\StringTok{ }\KeywordTok{keep}\NormalTok{(is.factor) }\OperatorTok{%>%}\StringTok{ }\NormalTok{colnames}
+
+
+\NormalTok{catplot <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(df, x,y)\{}
+  \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df, }\KeywordTok{aes_string}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ x, }\DataTypeTok{fill =}\NormalTok{ y)) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{position =} \StringTok{"fill"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.9}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{    }\KeywordTok{coord_flip}\NormalTok{()}
+\NormalTok{\}}
+
+
+\NormalTok{plotlist2 <-}\StringTok{ }\KeywordTok{lapply}\NormalTok{(expls, }\ControlFlowTok{function}\NormalTok{(x) }\KeywordTok{catplot}\NormalTok{(work, x, target))}
+\KeywordTok{plot_grid}\NormalTok{(}\DataTypeTok{plotlist =}\NormalTok{ plotlist2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-2-6.pdf}
+
+\#Additional EDA - Scatter Plots \#Here we are trying to see if we can
+gain any further insights into how these variables interact with
+attrition.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Plots to see what is correlated with Attrition)}
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{MonthlyRate, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{MonthlyIncome, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{JobSatisfaction, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{PercentSalaryHike, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{EnvironmentSatisfaction, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{JobSatisfaction, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{RelationshipSatisfaction, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{TotalWorkingYears, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-8.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{WorkLifeBalance, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-9.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{YearsInCurrentRole, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-10.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{YearsSinceLastPromotion, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-11.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{JobLevel, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-12.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{DistanceFromHome, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-13.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Education, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{JobRole))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-14.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Checking if Travel Rate has an impact}
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{MonthlyRate, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-15.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{MonthlyIncome, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-16.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{JobSatisfaction, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-17.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{PercentSalaryHike, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-18.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{EnvironmentSatisfaction, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-19.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{JobSatisfaction, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-20.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{RelationshipSatisfaction, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-21.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{TotalWorkingYears, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-22.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{WorkLifeBalance, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-23.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{YearsInCurrentRole, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-24.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{YearsSinceLastPromotion, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-25.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{JobLevel, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-26.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{DistanceFromHome, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-27.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Education, }\DataTypeTok{y=}\NormalTok{Attrition,}\DataTypeTok{color=}\NormalTok{BusinessTravel))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-28.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Boxplots of data}
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{MonthlyRate))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-29.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{MonthlyIncome))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-30.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{JobSatisfaction))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-31.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{PercentSalaryHike))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-32.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{EnvironmentSatisfaction))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-33.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{JobSatisfaction))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-34.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{RelationshipSatisfaction))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-35.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{TotalWorkingYears))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-36.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{WorkLifeBalance))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-37.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{YearsInCurrentRole))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-38.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{YearsSinceLastPromotion))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-39.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{JobLevel))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-40.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(work, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Attrition, }\DataTypeTok{y=}\NormalTok{DistanceFromHome))}\OperatorTok{+}\KeywordTok{geom_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-3-41.pdf}
+
+\#Here, we drop the variables that have only one value. Variables with
+no standard deviation are of no use to us in this analysis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Drop variables with no standard deviation}
+\NormalTok{work <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(work, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(EmployeeCount, StandardHours, Over18))}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(Case2PredictionsSeanMcWhirter_Attrition, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(EmployeeCount, StandardHours, Over18))}
+\end{Highlighting}
+\end{Shaded}
+
+\#With the correlation plot below, we are inspecting correlation between
+numeric variables. As we can see, there are quite a few variables that
+are correlated with one another.\\
+\#This could pose a problem, so we will attempt to deal with them later
+on if they become problematic.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#corrplot}
+
+\NormalTok{work }\OperatorTok{%>%}\StringTok{ }\KeywordTok{keep}\NormalTok{(is.numeric)}\OperatorTok{%>%}\StringTok{ }\NormalTok{na.omit }\OperatorTok{%>%}\StringTok{ }\NormalTok{cor }\OperatorTok{%>%}\StringTok{ }\KeywordTok{corrplot}\NormalTok{(}\StringTok{"upper"}\NormalTok{, }\DataTypeTok{addCoef.col =} \StringTok{"white"}\NormalTok{, }\DataTypeTok{number.digits =} \DecValTok{2}\NormalTok{,}
+             \DataTypeTok{number.cex =} \FloatTok{0.5}\NormalTok{, }\DataTypeTok{method=}\StringTok{"square"}\NormalTok{,}
+             \DataTypeTok{order=}\StringTok{"hclust"}\NormalTok{, }\DataTypeTok{title=}\StringTok{"Variable Corr Heatmap"}\NormalTok{,}
+             \DataTypeTok{tl.srt=}\DecValTok{90}\NormalTok{, }\DataTypeTok{tl.cex =} \FloatTok{0.8}\NormalTok{,)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\#Feature Engineering attempt. The goal here was to combine differnet
+variables to try and pull the attrition density away from the
+non-attrition.\\
+\#Quite a few hours went into this, however no beneficial outcome came
+of it due to my lack of knowledge in Feature Engineering.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{work_test<-work}
+
+\NormalTok{work_test<-work_test}\OperatorTok{%>%}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{IncLevYears=}\NormalTok{((JobLevel}\OperatorTok{+}\NormalTok{TotalWorkingYears}\OperatorTok{+}\NormalTok{YearsAtCompany)}\OperatorTok{*}\NormalTok{Age))}
+\NormalTok{work_test<-work_test}\OperatorTok{%>%}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{IncLevYears2=}\NormalTok{(YearsSinceLastPromotion}\OperatorTok{+}\NormalTok{YearsAtCompany))}
+\NormalTok{work_test<-work_test}\OperatorTok{%>%}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{IncLevYears3=}\NormalTok{(JobInvolvement}\OperatorTok{+}\KeywordTok{log}\NormalTok{(MonthlyIncome)}\OperatorTok{+}\NormalTok{JobLevel}\OperatorTok{+}\NormalTok{TotalWorkingYears}\OperatorTok{+}\NormalTok{YearsAtCompany}\OperatorTok{+}\NormalTok{YearsInCurrentRole))}
+\NormalTok{work_test<-work_test}\OperatorTok{%>%}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{IncLevYears4=}\NormalTok{NumCompaniesWorked}\OperatorTok{+}\NormalTok{Age}\OperatorTok{+}\NormalTok{YearsSinceLastPromotion)}
+
+\CommentTok{#work<-work%>%mutate(CoRolePro=YearsInCurrentRole*YearsAtCompany*YearsSinceLastPromotion)}
+\NormalTok{work_test<-work_test}\OperatorTok{%>%}\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{CoRolePro2=}\NormalTok{(YearsSinceLastPromotion}\OperatorTok{+}\NormalTok{YearsWithCurrManager}\OperatorTok{+}\NormalTok{YearsAtCompany))}
+
+
+\CommentTok{#work<-work%>%mutate(test=(((MonthlyIncome*JobInvolvement)/TotalWorkingYears)}
+
+
+\NormalTok{numplot <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(df, explan, resp) \{}
+  \KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{(}\KeywordTok{aes_string}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ explan, }\DataTypeTok{fill =}\NormalTok{ resp), }\DataTypeTok{alpha =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{\}}
+
+\KeywordTok{numplot}\NormalTok{(work_test, }\DataTypeTok{explan =} \StringTok{"IncLevYears"}\NormalTok{, }\DataTypeTok{resp =} \StringTok{"Attrition"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{numplot}\NormalTok{(work_test, }\DataTypeTok{explan =} \StringTok{"IncLevYears2"}\NormalTok{, }\DataTypeTok{resp =} \StringTok{"Attrition"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{numplot}\NormalTok{(work_test, }\DataTypeTok{explan =} \StringTok{"IncLevYears3"}\NormalTok{, }\DataTypeTok{resp =} \StringTok{"Attrition"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-6-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{numplot}\NormalTok{(work_test, }\DataTypeTok{explan =} \StringTok{"IncLevYears4"}\NormalTok{, }\DataTypeTok{resp =} \StringTok{"Attrition"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-6-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{numplot}\NormalTok{(work_test, }\DataTypeTok{explan =} \StringTok{"CoRolePro2"}\NormalTok{, }\DataTypeTok{resp =} \StringTok{"Attrition"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-6-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#numplot(work, explan = "test", resp = "Attrition")}
+\NormalTok{work_test}\OperatorTok{%>%}\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{IncLevYears3, }\DataTypeTok{y=}\NormalTok{CoRolePro2, }\DataTypeTok{color=}\NormalTok{Attrition))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{(}\DataTypeTok{position=}\StringTok{"jitter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-6-6.pdf}
+
+\#Here we are converting the factored variables into integer to be used
+with Knn
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Converting for the training set}
+\NormalTok{work}\OperatorTok{$}\NormalTok{JobRole <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{JobRole)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{OverTime <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{OverTime)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{BusinessTravel <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{BusinessTravel)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{Department <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{Department)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{EducationField <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{EducationField)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{MaritalStatus <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{MaritalStatus)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{OverTime <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{OverTime)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{Gender <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{Gender)}
+
+\CommentTok{#Converting for the test set}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{JobRole <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{JobRole)}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{OverTime <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{OverTime)}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{BusinessTravel <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{BusinessTravel)}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{Department <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{Department)}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{EducationField <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{EducationField)}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{MaritalStatus <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{MaritalStatus)}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{OverTime <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{OverTime)}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{Gender <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{$}\NormalTok{Gender)}
+\end{Highlighting}
+\end{Shaded}
+
+\#Standardize data for KNN
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{##Standardize all int columns}
+\NormalTok{work<-work}\OperatorTok{%>%}\KeywordTok{mutate_if}\NormalTok{(is.numeric,scale)}
+
+\CommentTok{#For the blank set, we need to keep the ID value as-is so we can use it with our final prediction output.}
+\NormalTok{Case2PredictionsSeanMcWhirter_Attrition<-Case2PredictionsSeanMcWhirter_Attrition}\OperatorTok{%>%}\KeywordTok{mutate_at}\NormalTok{(}\KeywordTok{vars}\NormalTok{(}\OperatorTok{-}\NormalTok{ID),scale)}
+
+\CommentTok{#Confirm it worked and get final column numbers}
+\CommentTok{#str(work)}
+\CommentTok{#str(Case2PredictionsSeanMcWhirter_Attrition)}
+\end{Highlighting}
+\end{Shaded}
+
+\#KNN Variable Selection--This will run all of the variables and produce
+the most important ones.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#install.packages("ISLR")}
+\CommentTok{#library(ISLR)}
+\CommentTok{#library(caret)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{300}\NormalTok{)}
+\CommentTok{#Spliting data as training and test set. Using createDataPartition() function from caret}
+\NormalTok{indxTrain <-}\StringTok{ }\KeywordTok{createDataPartition}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ work}\OperatorTok{$}\NormalTok{Attrition,}\DataTypeTok{p =} \FloatTok{0.75}\NormalTok{,}\DataTypeTok{list =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{training <-}\StringTok{ }\NormalTok{work[indxTrain,]}
+\NormalTok{testing <-}\StringTok{ }\NormalTok{work[}\OperatorTok{-}\NormalTok{indxTrain,]}
+
+\CommentTok{#Checking distibution in origanl data and partitioned data}
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(training}\OperatorTok{$}\NormalTok{Attrition)) }\OperatorTok{*}\StringTok{ }\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##       No      Yes 
+## 83.92037 16.07963
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(testing}\OperatorTok{$}\NormalTok{Attrition)) }\OperatorTok{*}\StringTok{ }\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##       No      Yes 
+## 83.87097 16.12903
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(work}\OperatorTok{$}\NormalTok{Attrition)) }\OperatorTok{*}\StringTok{ }\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##       No      Yes 
+## 83.90805 16.09195
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Training the model}
+\NormalTok{trctrl <-}\StringTok{ }\KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"repeatedcv"}\NormalTok{, }\DataTypeTok{number =} \DecValTok{10}\NormalTok{, }\DataTypeTok{repeats =} \DecValTok{3}\NormalTok{)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{3333}\NormalTok{)}
+\NormalTok{knn_fit <-}\StringTok{ }\NormalTok{caret}\OperatorTok{::}\KeywordTok{train}\NormalTok{(Attrition }\OperatorTok{~}\NormalTok{., }\DataTypeTok{data =}\NormalTok{ training, }\DataTypeTok{method =} \StringTok{"knn"}\NormalTok{,}
+ \DataTypeTok{trControl=}\NormalTok{trctrl,}
+ \DataTypeTok{preProcess =} \KeywordTok{c}\NormalTok{(}\StringTok{"center"}\NormalTok{, }\StringTok{"scale"}\NormalTok{),}
+ \DataTypeTok{tuneLength =} \DecValTok{10}\NormalTok{)}
+
+\NormalTok{knn_fit}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## k-Nearest Neighbors 
+## 
+## 653 samples
+##  33 predictor
+##   2 classes: 'No', 'Yes' 
+## 
+## Pre-processing: centered (33), scaled (33) 
+## Resampling: Cross-Validated (10 fold, repeated 3 times) 
+## Summary of sample sizes: 587, 588, 587, 588, 587, 587, ... 
+## Resampling results across tuning parameters:
+## 
+##   k   Accuracy   Kappa     
+##    5  0.8459144  0.14489923
+##    7  0.8417958  0.07695046
+##    9  0.8453700  0.08520471
+##   11  0.8458751  0.07479503
+##   13  0.8458671  0.07100590
+##   15  0.8428057  0.04882411
+##   17  0.8433341  0.05814823
+##   19  0.8448648  0.06154552
+##   21  0.8448412  0.05390909
+##   23  0.8412748  0.01956149
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was k = 5.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knnPredict<-}\KeywordTok{predict}\NormalTok{(knn_fit, }\DataTypeTok{newdata=}\NormalTok{testing)}
+\KeywordTok{confusionMatrix}\NormalTok{(knnPredict, testing}\OperatorTok{$}\NormalTok{Attrition)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  No Yes
+##        No  180  32
+##        Yes   2   3
+##                                         
+##                Accuracy : 0.8433        
+##                  95% CI : (0.788, 0.889)
+##     No Information Rate : 0.8387        
+##     P-Value [Acc > NIR] : 0.4715        
+##                                         
+##                   Kappa : 0.1143        
+##                                         
+##  Mcnemar's Test P-Value : 6.577e-07     
+##                                         
+##             Sensitivity : 0.98901       
+##             Specificity : 0.08571       
+##          Pos Pred Value : 0.84906       
+##          Neg Pred Value : 0.60000       
+##              Prevalence : 0.83871       
+##          Detection Rate : 0.82949       
+##    Detection Prevalence : 0.97696       
+##       Balanced Accuracy : 0.53736       
+##                                         
+##        'Positive' Class : No            
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#knn_fit 2 --> for ROC maximization}
+\NormalTok{ctrl <-}\StringTok{ }\KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method =} \StringTok{"repeatedcv"}\NormalTok{, }\DataTypeTok{repeats =} \DecValTok{5}\NormalTok{, }\DataTypeTok{classProbs=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{summaryFunction =}\NormalTok{ twoClassSummary)}
+\NormalTok{kNNFit4 <-}\StringTok{ }\NormalTok{caret}\OperatorTok{::}\KeywordTok{train}\NormalTok{(Attrition }\OperatorTok{~}\StringTok{ }\NormalTok{., }
+                \DataTypeTok{data =}\NormalTok{ work,}
+                \DataTypeTok{method =} \StringTok{"knn"}\NormalTok{,}
+                \DataTypeTok{tuneLength =} \DecValTok{15}\NormalTok{,}
+                \DataTypeTok{trControl =}\NormalTok{ ctrl,}
+                \DataTypeTok{preProc =} \KeywordTok{c}\NormalTok{(}\StringTok{"center"}\NormalTok{, }\StringTok{"scale"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in train.default(x, y, weights = w, ...): The metric "Accuracy" was
+## not in the result set. ROC will be used instead.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{kNNFit4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## k-Nearest Neighbors 
+## 
+## 870 samples
+##  33 predictor
+##   2 classes: 'No', 'Yes' 
+## 
+## Pre-processing: centered (33), scaled (33) 
+## Resampling: Cross-Validated (10 fold, repeated 5 times) 
+## Summary of sample sizes: 783, 783, 783, 783, 783, 783, ... 
+## Resampling results across tuning parameters:
+## 
+##   k   ROC        Sens       Spec      
+##    5  0.6752348  0.9824658  0.13428571
+##    7  0.6872211  0.9912329  0.09857143
+##    9  0.6916341  0.9953425  0.07285714
+##   11  0.7027984  0.9989041  0.06285714
+##   13  0.7091585  0.9989041  0.06142857
+##   15  0.7125049  0.9994521  0.05428571
+##   17  0.7221037  0.9991781  0.04000000
+##   19  0.7305088  0.9994521  0.03857143
+##   21  0.7306751  0.9997260  0.03571429
+##   23  0.7328963  1.0000000  0.03714286
+##   25  0.7374951  1.0000000  0.02857143
+##   27  0.7462133  1.0000000  0.01428571
+##   29  0.7487182  1.0000000  0.01142857
+##   31  0.7489824  1.0000000  0.01142857
+##   33  0.7540117  1.0000000  0.01000000
+## 
+## ROC was used to select the optimal model using the largest value.
+## The final value used for the model was k = 33.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#####Ranking of variable importance}
+
+\KeywordTok{library}\NormalTok{(mlbench)}
+\NormalTok{control <-}\StringTok{ }\NormalTok{caret}\OperatorTok{::}\KeywordTok{trainControl}\NormalTok{(}\DataTypeTok{method=}\StringTok{"repeatedcv"}\NormalTok{, }\DataTypeTok{number=}\DecValTok{10}\NormalTok{, }\DataTypeTok{repeats=}\DecValTok{3}\NormalTok{)}
+
+\CommentTok{#Train Model}
+\NormalTok{model<-}\StringTok{ }\NormalTok{caret}\OperatorTok{::}\KeywordTok{train}\NormalTok{(Attrition }\OperatorTok{~}\StringTok{ }\NormalTok{. , }\DataTypeTok{data=}\NormalTok{work, }\DataTypeTok{method=}\StringTok{"lvq"}\NormalTok{, }\DataTypeTok{preProcess=}\StringTok{"scale"}\NormalTok{ , }\DataTypeTok{trControl=}\NormalTok{control)}
+
+
+\CommentTok{#Importance estimate}
+\NormalTok{importance<-}\KeywordTok{varImp}\NormalTok{(model, }\DataTypeTok{scale=}\OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{print}\NormalTok{(importance)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## ROC curve variable importance
+## 
+##   only 20 most important variables shown (out of 33)
+## 
+##                         Importance
+## OverTime                    0.6679
+## MonthlyIncome               0.6567
+## TotalWorkingYears           0.6563
+## YearsAtCompany              0.6470
+## StockOptionLevel            0.6455
+## MaritalStatus               0.6438
+## JobLevel                    0.6406
+## YearsInCurrentRole          0.6403
+## YearsWithCurrManager        0.6291
+## Age                         0.6265
+## JobInvolvement              0.6159
+## JobSatisfaction             0.5833
+## JobRole                     0.5829
+## Department                  0.5605
+## DistanceFromHome            0.5586
+## EnvironmentSatisfaction     0.5532
+## WorkLifeBalance             0.5491
+## TrainingTimesLastYear       0.5428
+## Education                   0.5384
+## ID                          0.5371
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(importance)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\#Here we will rank the variables by importance. This is just another
+model we can use to confirm the variable importance using Recursive
+Feature Elimination
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{####Ranking of variable importance via Recursive Feature Elimination (RFE)}
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{7}\NormalTok{)}
+\CommentTok{# define the control using a random forest selection function}
+\NormalTok{control <-}\StringTok{ }\KeywordTok{rfeControl}\NormalTok{(}\DataTypeTok{functions=}\NormalTok{rfFuncs, }\DataTypeTok{method=}\StringTok{"cv"}\NormalTok{, }\DataTypeTok{number=}\DecValTok{3}\NormalTok{)}
+\CommentTok{# run the RFE algorithm}
+\NormalTok{results <-}\StringTok{ }\KeywordTok{rfe}\NormalTok{(work[,}\DecValTok{3}\OperatorTok{:}\DecValTok{32}\NormalTok{], work[,}\DecValTok{2}\NormalTok{], }\DataTypeTok{sizes=}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\OperatorTok{:}\DecValTok{32}\NormalTok{), }\DataTypeTok{rfeControl=}\NormalTok{control)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in rfout$mse/(var(y) * (n - 1)/n): Recycling array of length 1 in vector-array arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# summarize the results}
+\CommentTok{#print(results)}
+\CommentTok{# list the chosen features}
+\KeywordTok{predictors}\NormalTok{(results)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "TotalWorkingYears"        "NumCompaniesWorked"      
+##  [3] "YearsAtCompany"           "MonthlyIncome"           
+##  [5] "JobLevel"                 "Education"               
+##  [7] "YearsInCurrentRole"       "YearsSinceLastPromotion" 
+##  [9] "Attrition"                "MaritalStatus"           
+## [11] "MonthlyRate"              "HourlyRate"              
+## [13] "JobRole"                  "WorkLifeBalance"         
+## [15] "StockOptionLevel"         "BusinessTravel"          
+## [17] "EducationField"           "DailyRate"               
+## [19] "Gender"                   "EmployeeNumber"          
+## [21] "OverTime"                 "PercentSalaryHike"       
+## [23] "JobInvolvement"           "RelationshipSatisfaction"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot the results}
+\KeywordTok{plot}\NormalTok{(results, }\DataTypeTok{type=}\KeywordTok{c}\NormalTok{(}\StringTok{"g"}\NormalTok{, }\StringTok{"o"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#str(work)}
+\end{Highlighting}
+\end{Shaded}
+
+KNN
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#KNN }
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{100}\NormalTok{)}
+\NormalTok{splitPerc =}\StringTok{ }\FloatTok{.70}
+
+\CommentTok{#test/train split}
+\NormalTok{trainIndices =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\KeywordTok{dim}\NormalTok{(work)[}\DecValTok{1}\NormalTok{],}\KeywordTok{round}\NormalTok{(splitPerc }\OperatorTok{*}\StringTok{ }\KeywordTok{dim}\NormalTok{(work)[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{train =}\StringTok{ }\NormalTok{work[trainIndices,]}
+\NormalTok{test =}\StringTok{ }\NormalTok{work[}\OperatorTok{-}\NormalTok{trainIndices,]}
+
+\NormalTok{var1=}\DecValTok{22}
+\NormalTok{var2=}\DecValTok{19}
+\NormalTok{var3=}\DecValTok{26}
+\NormalTok{var4=}\DecValTok{16}
+\NormalTok{var5=}\DecValTok{15}
+\NormalTok{var6=}\DecValTok{18}
+\NormalTok{k_num=}\DecValTok{3}
+
+\CommentTok{#KNN Test}
+\NormalTok{classifications =}\StringTok{ }\KeywordTok{knn}\NormalTok{(train[,}\KeywordTok{c}\NormalTok{(var1, var2, var3, var4, var5, var6)],test[,}\KeywordTok{c}\NormalTok{(var1, var2, var3, var4, var5, var6)],train}\OperatorTok{$}\NormalTok{Attrition, }\DataTypeTok{prob =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{k =}\NormalTok{ k_num)}
+\KeywordTok{table}\NormalTok{(classifications,test}\OperatorTok{$}\NormalTok{Attrition)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                
+## classifications  No Yes
+##             No  206  21
+##             Yes  14  20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CM1=}\KeywordTok{confusionMatrix}\NormalTok{(}\KeywordTok{table}\NormalTok{(classifications, test}\OperatorTok{$}\NormalTok{Attrition))}
+
+
+\CommentTok{#Copy of knn from function}
+\NormalTok{classifications =}\StringTok{ }\KeywordTok{knn}\NormalTok{(train[,}\KeywordTok{c}\NormalTok{(var1, var2, var3, var4, var5, var6)],test[,}\KeywordTok{c}\NormalTok{(var1, var2, var3, var4, var5, var6)],train}\OperatorTok{$}\NormalTok{Attrition, }\DataTypeTok{prob =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{k =}\NormalTok{ k_num)}
+\KeywordTok{table}\NormalTok{(test}\OperatorTok{$}\NormalTok{Attrition,classifications)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      classifications
+##        No Yes
+##   No  206  14
+##   Yes  21  20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CM2 =}\StringTok{ }\KeywordTok{confusionMatrix}\NormalTok{(}\KeywordTok{table}\NormalTok{(test}\OperatorTok{$}\NormalTok{Attrition,classifications))}
+  
+\CommentTok{## Loop for many k and one training / test partition--determining the optimal number of k.}
+\NormalTok{iterations=}\DecValTok{50}
+\NormalTok{accs =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{accuracy =} \KeywordTok{numeric}\NormalTok{(iterations), }\DataTypeTok{sensitivity=}\KeywordTok{numeric}\NormalTok{(iterations), }\DataTypeTok{specificity=}\KeywordTok{numeric}\NormalTok{(iterations), }\DataTypeTok{k =} \KeywordTok{numeric}\NormalTok{(iterations))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{iterations)}
+\NormalTok{\{}
+\NormalTok{  classifications =}\StringTok{ }\KeywordTok{knn}\NormalTok{(train[,}\KeywordTok{c}\NormalTok{(var1, var2, var3, var4, var5, var6)],test[,}\KeywordTok{c}\NormalTok{(var1, var2, var3, var4, var5, var6)],train}\OperatorTok{$}\NormalTok{Attrition, }\DataTypeTok{prob =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{k =}\NormalTok{ i)}
+  \KeywordTok{table}\NormalTok{(classifications,test}\OperatorTok{$}\NormalTok{Attrition)}
+\NormalTok{  CM =}\StringTok{ }\KeywordTok{confusionMatrix}\NormalTok{(}\KeywordTok{table}\NormalTok{(classifications, test}\OperatorTok{$}\NormalTok{Attrition))}
+\NormalTok{  accs}\OperatorTok{$}\NormalTok{accuracy[i] =}\StringTok{ }\NormalTok{CM}\OperatorTok{$}\NormalTok{overall[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  accs}\OperatorTok{$}\NormalTok{sensitivity[i]=CM}\OperatorTok{$}\NormalTok{byClass[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  accs}\OperatorTok{$}\NormalTok{specificity[i]=CM}\OperatorTok{$}\NormalTok{byClass[}\DecValTok{2}\NormalTok{]}
+\NormalTok{  accs}\OperatorTok{$}\NormalTok{k[i] =}\StringTok{ }\NormalTok{i}
+\NormalTok{\}}
+\KeywordTok{plot}\NormalTok{(accs}\OperatorTok{$}\NormalTok{k,accs}\OperatorTok{$}\NormalTok{accuracy, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"k"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Accuracy"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(accs}\OperatorTok{$}\NormalTok{k,accs}\OperatorTok{$}\NormalTok{sensitivity, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"k"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"sensitivity"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-12-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(accs}\OperatorTok{$}\NormalTok{k,accs}\OperatorTok{$}\NormalTok{specificity, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"k"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"specificity"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-12-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{accs}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     accuracy sensitivity specificity  k
+## 1  0.8160920   0.8954545   0.3902439  1
+## 2  0.8199234   0.8909091   0.4390244  2
+## 3  0.8659004   0.9363636   0.4878049  3
+## 4  0.8582375   0.9363636   0.4390244  4
+## 5  0.8773946   0.9545455   0.4634146  5
+## 6  0.8659004   0.9500000   0.4146341  6
+## 7  0.8697318   0.9545455   0.4146341  7
+## 8  0.8582375   0.9590909   0.3170732  8
+## 9  0.8697318   0.9681818   0.3414634  9
+## 10 0.8659004   0.9636364   0.3414634 10
+## 11 0.8697318   0.9681818   0.3414634 11
+## 12 0.8735632   0.9727273   0.3414634 12
+## 13 0.8582375   0.9681818   0.2682927 13
+## 14 0.8697318   0.9727273   0.3170732 14
+## 15 0.8659004   0.9772727   0.2682927 15
+## 16 0.8620690   0.9727273   0.2682927 16
+## 17 0.8659004   0.9772727   0.2682927 17
+## 18 0.8659004   0.9772727   0.2682927 18
+## 19 0.8620690   0.9772727   0.2439024 19
+## 20 0.8659004   0.9727273   0.2926829 20
+## 21 0.8544061   0.9681818   0.2439024 21
+## 22 0.8620690   0.9772727   0.2439024 22
+## 23 0.8582375   0.9681818   0.2682927 23
+## 24 0.8544061   0.9681818   0.2439024 24
+## 25 0.8467433   0.9590909   0.2439024 25
+## 26 0.8467433   0.9590909   0.2439024 26
+## 27 0.8467433   0.9590909   0.2439024 27
+## 28 0.8467433   0.9590909   0.2439024 28
+## 29 0.8467433   0.9590909   0.2439024 29
+## 30 0.8544061   0.9681818   0.2439024 30
+## 31 0.8544061   0.9727273   0.2195122 31
+## 32 0.8505747   0.9636364   0.2439024 32
+## 33 0.8544061   0.9636364   0.2682927 33
+## 34 0.8505747   0.9681818   0.2195122 34
+## 35 0.8429119   0.9590909   0.2195122 35
+## 36 0.8467433   0.9590909   0.2439024 36
+## 37 0.8505747   0.9681818   0.2195122 37
+## 38 0.8505747   0.9681818   0.2195122 38
+## 39 0.8429119   0.9590909   0.2195122 39
+## 40 0.8429119   0.9590909   0.2195122 40
+## 41 0.8429119   0.9590909   0.2195122 41
+## 42 0.8390805   0.9545455   0.2195122 42
+## 43 0.8429119   0.9590909   0.2195122 43
+## 44 0.8429119   0.9590909   0.2195122 44
+## 45 0.8429119   0.9590909   0.2195122 45
+## 46 0.8390805   0.9545455   0.2195122 46
+## 47 0.8429119   0.9590909   0.2195122 47
+## 48 0.8429119   0.9590909   0.2195122 48
+## 49 0.8429119   0.9590909   0.2195122 49
+## 50 0.8429119   0.9590909   0.2195122 50
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CM1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##                
+## classifications  No Yes
+##             No  206  21
+##             Yes  14  20
+##                                           
+##                Accuracy : 0.8659          
+##                  95% CI : (0.8185, 0.9048)
+##     No Information Rate : 0.8429          
+##     P-Value [Acc > NIR] : 0.1753          
+##                                           
+##                   Kappa : 0.4558          
+##                                           
+##  Mcnemar's Test P-Value : 0.3105          
+##                                           
+##             Sensitivity : 0.9364          
+##             Specificity : 0.4878          
+##          Pos Pred Value : 0.9075          
+##          Neg Pred Value : 0.5882          
+##              Prevalence : 0.8429          
+##          Detection Rate : 0.7893          
+##    Detection Prevalence : 0.8697          
+##       Balanced Accuracy : 0.7121          
+##                                           
+##        'Positive' Class : No              
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CM2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Confusion Matrix and Statistics
+## 
+##      classifications
+##        No Yes
+##   No  206  14
+##   Yes  21  20
+##                                           
+##                Accuracy : 0.8659          
+##                  95% CI : (0.8185, 0.9048)
+##     No Information Rate : 0.8697          
+##     P-Value [Acc > NIR] : 0.6166          
+##                                           
+##                   Kappa : 0.4558          
+##                                           
+##  Mcnemar's Test P-Value : 0.3105          
+##                                           
+##             Sensitivity : 0.9075          
+##             Specificity : 0.5882          
+##          Pos Pred Value : 0.9364          
+##          Neg Pred Value : 0.4878          
+##              Prevalence : 0.8697          
+##          Detection Rate : 0.7893          
+##    Detection Prevalence : 0.8429          
+##       Balanced Accuracy : 0.7479          
+##                                           
+##        'Positive' Class : No              
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#The ouput from the graph below shows that the optimal K=3}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{knn-for-k-iterations-and-k-testtraining-sets}{%
+\paragraph{KNN for k-iterations and k-test/training
+sets}\label{knn-for-k-iterations-and-k-testtraining-sets}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{##Loop for many k values and many test/training sets.  This will tell us how our classifier acts over may differnet random samples of training/test sets as well as k-values.}
+\NormalTok{iterations=}\DecValTok{50}
+\NormalTok{numks=}\DecValTok{30}
+
+\NormalTok{masterAcc =}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{nrow=}\NormalTok{iterations, }\DataTypeTok{ncol=}\NormalTok{numks)}
+\NormalTok{massterSens=}\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{nrow=}\NormalTok{iterations, }\DataTypeTok{ncol=}\NormalTok{numks)}
+\NormalTok{masterSpec=}\KeywordTok{matrix}\NormalTok{(}\DataTypeTok{nrow=}\NormalTok{iterations, }\DataTypeTok{ncol=}\NormalTok{numks)}
+
+\ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{iterations)}
+\NormalTok{\{}
+\NormalTok{accs=}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{accuracy=}\KeywordTok{numeric}\NormalTok{(}\DecValTok{30}\NormalTok{), }\DataTypeTok{k=}\KeywordTok{numeric}\NormalTok{(}\DecValTok{30}\NormalTok{))}
+\NormalTok{trainIndicies=}\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\KeywordTok{dim}\NormalTok{(work)[}\DecValTok{1}\NormalTok{],}\KeywordTok{round}\NormalTok{(splitPerc}\OperatorTok{*}\KeywordTok{dim}\NormalTok{(work)[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{train=work[trainIndicies,]}
+\NormalTok{test=work[}\OperatorTok{-}\NormalTok{trainIndicies,]}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{numks)}
+\NormalTok{\{}
+\NormalTok{classifications=}\KeywordTok{knn}\NormalTok{(train[,}\KeywordTok{c}\NormalTok{(var1, var2, var3, var4, var5, var6)], test[,}\KeywordTok{c}\NormalTok{(var1, var2, var3, var4, var5, var6)], train}\OperatorTok{$}\NormalTok{Attrition, }\DataTypeTok{prob=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{k=}\NormalTok{i)}
+\KeywordTok{table}\NormalTok{(classifications, test}\OperatorTok{$}\NormalTok{Attrition)}
+\NormalTok{CM=}\KeywordTok{confusionMatrix}\NormalTok{(}\KeywordTok{table}\NormalTok{(classifications, test}\OperatorTok{$}\NormalTok{Attrition))}
+\NormalTok{masterAcc[j,i]=CM}\OperatorTok{$}\NormalTok{overall[}\DecValTok{1}\NormalTok{]}
+\NormalTok{massterSens[j,i]=CM}\OperatorTok{$}\NormalTok{byClass[}\DecValTok{1}\NormalTok{]}
+\NormalTok{masterSpec[j,i]=CM}\OperatorTok{$}\NormalTok{byClass[}\DecValTok{2}\NormalTok{]}
+\NormalTok{\}}
+  
+\NormalTok{\}}
+
+\NormalTok{MeanAcc =}\StringTok{ }\KeywordTok{colMeans}\NormalTok{(masterAcc)}
+\NormalTok{MeanSens =}\StringTok{ }\KeywordTok{colMeans}\NormalTok{(massterSens)}
+\NormalTok{MeanSpec =}\StringTok{ }\KeywordTok{colMeans}\NormalTok{(masterSpec)}
+
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,numks,}\DecValTok{1}\NormalTok{),MeanAcc, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,numks,}\DecValTok{1}\NormalTok{),MeanSens, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-13-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,numks,}\DecValTok{1}\NormalTok{),MeanSpec, }\DataTypeTok{type =} \StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{DDS-Case-Study-2-RMarkdown-Final_files/figure-latex/unnamed-chunk-13-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#The outcome confirms that lower k-value yields higher specificity }
+\end{Highlighting}
+\end{Shaded}
+
+\#Use the classifier to make the predictions for the blank data set
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Make Attrition numeric for "predict" to work}
+\CommentTok{#set.seed(400)}
+\CommentTok{#Dropping All columns but necessary ones}
+\CommentTok{#work_pred <- subset(work, select = c(ID, OverTime, MonthlyIncome, StockOptionLevel, JobRole, JobLevel, MaritalStatus))}
+
+
+\CommentTok{#Output of kNN fit}
+\CommentTok{#knnFit}
+
+\CommentTok{#Case2PredictionsSeanMcWhirter_Attrition <- predict(knnFit,newdata = Case2PredictionsSeanMcWhirter_Attrition )}
+\CommentTok{#Make Predictions}
+\CommentTok{#Predictions=predict(classifications, newdata=Case2PredictionsSeanMcWhirter_Attrition)}
+\CommentTok{#Case2PredictionsSeanMcWhirter_Attrition<-data.frame(ID=Case2PredictionsSeanMcWhirter_Attrition$ID, Predicted_Income=Predictions)}
+\CommentTok{#Write predicitons to CSV for submission}
+\CommentTok{#write.csv(Case2PredictionsSeanMcWhirter_Attrition, file="Case2PredictionsSeanMcWhirter_Attrition.csv", row.names = FALSE)}
+\end{Highlighting}
+\end{Shaded}
+
+\#Use the classifier to make the predictions for the blank data set
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#train_pred <- subset(work, select = c(OverTime, MonthlyIncome, StockOptionLevel, JobRole, JobLevel, MaritalStatus, Attrition))}
+\CommentTok{#predictions <- subset(Case2PredictionsSeanMcWhirter_Attrition, select = c(OverTime, MonthlyIncome, StockOptionLevel, JobRole, JobLevel, MaritalStatus))}
+
+\CommentTok{#classification = knn(train_pred[,1:6], predictions[,1:6], train_pred$Attrition, k=3, prob=TRUE)}
+\CommentTok{#Case2PredictionsSeanMcWhirter_Attrition$Attrition <- data.frame(classification)}
+\CommentTok{#Case2PredictionsSeanMcWhirter_Attrition$Attrition}
+\CommentTok{#Case2PredictionsSeanMcWhirter_Attrition<-data.frame(ID=Case2PredictionsSeanMcWhirter_Attrition$ID, Case2PredictionsSeanMcWhirter_Attrition$Attrition)}
+\CommentTok{#write.csv(Case2PredictionsSeanMcWhirter_Attrition, file="Case2PredictionsSeanMcWhirter_Attrition.csv", row.names = FALSE)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{linear-regression-for-monthly-income}{%
+\subsection{Linear Regression for Monthly
+Income}\label{linear-regression-for-monthly-income}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Reset Data}
+\NormalTok{work=}\KeywordTok{read.csv}\NormalTok{(}\StringTok{"C:/Users/seans/Desktop/DDS/Unit 14 and 15 Case Study 2/CaseStudy2-data.csv"}\NormalTok{, }\DataTypeTok{header=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{sep=}\StringTok{","}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{#Drop variables with no standard deviation as well as any income data}
+\NormalTok{work <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(work, }\DataTypeTok{select =} \OperatorTok{-}\KeywordTok{c}\NormalTok{(EmployeeCount, StandardHours, Over18, ID, MonthlyRate, DailyRate))}
+
+
+\KeywordTok{library}\NormalTok{(olsrr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'olsrr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:datasets':
+## 
+##     rivers
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Model for Monthly Income}
+\NormalTok{model<-}\KeywordTok{lm}\NormalTok{(MonthlyIncome }\OperatorTok{~}\StringTok{ }\NormalTok{. , }\DataTypeTok{data=}\NormalTok{work)}
+\CommentTok{# use stepwise variable selection (ols_step_forward_p(model))}
+\KeywordTok{ols_step_both_p}\NormalTok{(model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Stepwise Selection Method   
+## ---------------------------
+## 
+## Candidate Terms: 
+## 
+## 1. Age 
+## 2. Attrition 
+## 3. BusinessTravel 
+## 4. Department 
+## 5. DistanceFromHome 
+## 6. Education 
+## 7. EducationField 
+## 8. EmployeeNumber 
+## 9. EnvironmentSatisfaction 
+## 10. Gender 
+## 11. HourlyRate 
+## 12. JobInvolvement 
+## 13. JobLevel 
+## 14. JobRole 
+## 15. JobSatisfaction 
+## 16. MaritalStatus 
+## 17. NumCompaniesWorked 
+## 18. OverTime 
+## 19. PercentSalaryHike 
+## 20. PerformanceRating 
+## 21. RelationshipSatisfaction 
+## 22. StockOptionLevel 
+## 23. TotalWorkingYears 
+## 24. TrainingTimesLastYear 
+## 25. WorkLifeBalance 
+## 26. YearsAtCompany 
+## 27. YearsInCurrentRole 
+## 28. YearsSinceLastPromotion 
+## 29. YearsWithCurrManager 
+## 
+## We are selecting variables based on p value...
+## 
+## Variables Entered/Removed: 
+## 
+## - JobLevel added 
+## - JobRole added 
+## - TotalWorkingYears added 
+## - BusinessTravel added 
+## - Gender added 
+## 
+## No more variables to be added/removed.
+## 
+## 
+## Final Model Output 
+## ------------------
+## 
+##                            Model Summary                            
+## -------------------------------------------------------------------
+## R                       0.974       RMSE                  1054.722 
+## R-Squared               0.948       Coef. Var               16.505 
+## Adj. R-Squared          0.947       MSE                1112439.436 
+## Pred R-Squared          0.947       MAE                    797.414 
+## -------------------------------------------------------------------
+##  RMSE: Root Mean Square Error 
+##  MSE: Mean Square Error 
+##  MAE: Mean Absolute Error 
+## 
+##                                       ANOVA                                       
+## ---------------------------------------------------------------------------------
+##                        Sum of                                                    
+##                       Squares         DF       Mean Square       F          Sig. 
+## ---------------------------------------------------------------------------------
+## Regression    17417376230.084         13    1339798171.545    1204.379    0.0000 
+## Residual        952248157.111        856       1112439.436                       
+## Total         18369624387.195        869                                         
+## ---------------------------------------------------------------------------------
+## 
+##                                                Parameter Estimates                                                 
+## ------------------------------------------------------------------------------------------------------------------
+##                           model        Beta    Std. Error    Std. Beta      t        Sig        lower       upper 
+## ------------------------------------------------------------------------------------------------------------------
+##                     (Intercept)    -478.919       226.410                 -2.115    0.035    -923.303     -34.536 
+##                        JobLevel    2792.584        81.269        0.662    34.362    0.000    2633.073    2952.094 
+##          JobRoleHuman Resources    -374.979       250.206       -0.014    -1.499    0.134    -866.069     116.110 
+##    JobRoleLaboratory Technician    -625.023       168.108       -0.052    -3.718    0.000    -954.974    -295.071 
+##                  JobRoleManager    3985.659       227.584        0.204    17.513    0.000    3538.971    4432.347 
+##   JobRoleManufacturing Director     118.224       166.250        0.008     0.711    0.477    -208.081     444.529 
+##        JobRoleResearch Director    3974.664       213.077        0.203    18.654    0.000    3556.450    4392.879 
+##       JobRoleResearch Scientist    -345.383       168.272       -0.030    -2.053    0.040    -675.657     -15.109 
+##          JobRoleSales Executive     -74.387       143.166       -0.007    -0.520    0.603    -355.385     206.612 
+##     JobRoleSales Representative    -405.032       211.162       -0.021    -1.918    0.055    -819.488       9.424 
+##               TotalWorkingYears      48.192         7.902        0.079     6.099    0.000      32.682      63.701 
+## BusinessTravelTravel_Frequently     214.458       138.887        0.018     1.544    0.123     -58.141     487.057 
+##     BusinessTravelTravel_Rarely     391.128       117.343        0.039     3.333    0.001     160.815     621.441 
+##                      GenderMale     132.512        73.395        0.014     1.805    0.071     -11.544     276.567 
+## ------------------------------------------------------------------------------------------------------------------
+\end{verbatim}
+
+\begin{verbatim}
+## 
+##                                      Stepwise Selection Summary                                      
+## ----------------------------------------------------------------------------------------------------
+##                               Added/                   Adj.                                             
+## Step        Variable         Removed     R-Square    R-Square      C(p)         AIC          RMSE       
+## ----------------------------------------------------------------------------------------------------
+##    1        JobLevel         addition       0.906       0.906    679.7640    15094.3534    1413.2958    
+##    2         JobRole         addition       0.945       0.944     37.7030    14641.4330    1084.4355    
+##    3    TotalWorkingYears    addition       0.947       0.947      3.0050    14607.2848    1062.7570    
+##    4     BusinessTravel      addition       0.948       0.947     -7.7670    14598.3432    1056.1120    
+##    5         Gender          addition       0.948       0.947     -9.0000    14597.0365    1054.7224    
+## ----------------------------------------------------------------------------------------------------
+\end{verbatim}
+
+\#Regression Cross Validation - Stepwise
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Using stepwise selection }
+
+\CommentTok{#Here we are chanign th factored variables to numeric so cross-validation will work}
+\NormalTok{work}\OperatorTok{$}\NormalTok{Attrition <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{Attrition)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{JobRole <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{JobRole)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{OverTime <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{OverTime)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{BusinessTravel <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{BusinessTravel)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{Department <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{Department)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{EducationField <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{EducationField)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{MaritalStatus <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{MaritalStatus)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{OverTime <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{OverTime)}
+\NormalTok{work}\OperatorTok{$}\NormalTok{Gender <-}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(work}\OperatorTok{$}\NormalTok{Gender)}
+
+\NormalTok{trainIndicies=}\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\KeywordTok{dim}\NormalTok{(work)[}\DecValTok{1}\NormalTok{],}\KeywordTok{round}\NormalTok{(.}\DecValTok{75}\OperatorTok{*}\KeywordTok{dim}\NormalTok{(work)[}\DecValTok{1}\NormalTok{]))}
+\NormalTok{train=work[trainIndicies,]}
+\NormalTok{test=work[}\OperatorTok{-}\NormalTok{trainIndicies,]}
+
+\NormalTok{model1_fit=}\KeywordTok{lm}\NormalTok{(MonthlyIncome}\OperatorTok{~}\NormalTok{JobLevel}\OperatorTok{+}\NormalTok{TotalWorkingYears}\OperatorTok{+}\NormalTok{BusinessTravel, }\DataTypeTok{data=}\NormalTok{train)}
+\KeywordTok{summary}\NormalTok{(model1_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = MonthlyIncome ~ JobLevel + TotalWorkingYears + BusinessTravel, 
+##     data = train)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5414.1  -868.4    61.1   719.8  3900.7 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)       -2280.45     238.23  -9.572  < 2e-16 ***
+## JobLevel           3655.47      79.50  45.983  < 2e-16 ***
+## TotalWorkingYears    67.71      11.32   5.982 3.65e-09 ***
+## BusinessTravel      183.95      80.57   2.283   0.0227 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1382 on 648 degrees of freedom
+## Multiple R-squared:  0.9079, Adjusted R-squared:  0.9074 
+## F-statistic:  2128 on 3 and 648 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model1_preds=}\KeywordTok{predict}\NormalTok{(model1_fit, }\DataTypeTok{newdata=}\NormalTok{test)}
+\KeywordTok{as.data.frame}\NormalTok{(model1_preds)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     model1_preds
+## 2      17970.589
+## 6       9663.219
+## 8       6123.991
+## 11     17970.589
+## 12      1762.089
+## 16      5823.800
+## 18      5688.386
+## 21      6462.524
+## 25      5988.578
+## 31      6007.749
+## 33     14789.064
+## 35      6123.991
+## 36      2081.451
+## 38      6665.644
+## 46      2555.398
+## 48      9847.168
+## 52     18715.362
+## 53      2603.933
+## 62      9914.875
+## 65      1994.574
+## 66      2400.814
+## 67      6733.350
+## 69      2081.451
+## 71      2739.347
+## 72      5988.578
+## 79     10427.163
+## 85      6801.057
+## 89      9663.219
+## 94      6259.404
+## 96      6936.470
+## 100     2400.814
+## 101     2333.107
+## 107     5891.506
+## 112    14653.651
+## 113    10456.528
+## 120     6530.231
+## 127     2419.984
+## 129     6936.470
+## 130    14585.945
+## 136     5940.042
+## 141    15127.597
+## 147     2468.520
+## 158    14131.169
+## 160    10407.992
+## 170     2671.640
+## 171     6259.404
+## 177    18173.709
+## 179     9663.219
+## 180     6394.817
+## 181    10253.408
+## 185     2284.571
+## 194     6530.231
+## 197     2603.933
+## 203     6530.231
+## 208     6733.350
+## 211    14315.118
+## 215     2265.400
+## 219     2265.400
+## 223     5688.386
+## 228     2197.694
+## 240    10524.234
+## 248     2129.987
+## 254     2062.281
+## 255     9953.217
+## 258     6123.991
+## 261     1946.038
+## 263     2468.520
+## 265     2333.107
+## 266     2333.107
+## 267    13792.636
+## 269     6007.749
+## 274     6327.111
+## 276    18444.535
+## 279     5988.578
+## 283     6394.817
+## 285     2400.814
+## 288     2129.987
+## 289     9730.926
+## 290     2129.987
+## 296     2265.400
+## 301     6075.455
+## 302     9663.219
+## 304     6259.404
+## 309     6549.401
+## 312    14382.825
+## 317     2149.158
+## 319     6123.991
+## 321     1897.502
+## 323     2419.984
+## 325    14315.118
+## 326     1994.574
+## 328     6191.698
+## 329     6752.521
+## 335    18212.050
+## 341     2333.107
+## 344     1810.625
+## 346    14315.118
+## 354     5756.093
+## 355    10795.061
+## 358     2333.107
+## 362     1810.625
+## 366    15146.768
+## 368     6191.698
+## 373    10678.818
+## 378     6530.231
+## 381    17970.589
+## 393     1829.796
+## 399     6094.626
+## 401     6327.111
+## 405     2333.107
+## 407     6462.524
+## 409    14992.184
+## 411     2333.107
+## 420     9914.875
+## 423     6394.817
+## 426    10456.528
+## 431     5920.871
+## 443     2265.400
+## 450     5891.506
+## 451     6259.404
+## 459     2265.400
+## 461     2284.571
+## 462     2942.466
+## 476     6346.282
+## 481     5988.578
+## 488     2265.400
+## 496    14856.771
+## 498     2013.745
+## 499     6733.350
+## 500     5891.506
+## 519     6259.404
+## 526    11085.058
+## 534     5823.800
+## 539     2333.107
+## 540     6191.698
+## 542     2874.760
+## 552     2333.107
+## 558     2333.107
+## 570    14382.825
+## 573     5872.335
+## 574     6259.404
+## 575     5988.578
+## 576     6056.284
+## 589     2468.520
+## 592     6665.644
+## 593     2081.451
+## 594     2603.933
+## 598     6936.470
+## 599     5988.578
+## 601     1626.676
+## 602     5823.800
+## 617     2468.520
+## 618     6191.698
+## 620     1626.676
+## 622     6752.521
+## 625     2284.571
+## 629    10611.112
+## 630     9847.168
+## 632    10185.701
+## 633     6868.764
+## 636     1878.332
+## 640     2265.400
+## 642     6597.937
+## 658    14469.702
+## 664     2129.987
+## 672     5988.578
+## 673     5736.922
+## 676    18309.122
+## 693     6530.231
+## 697    14266.583
+## 700    18241.415
+## 701     1994.574
+## 705     2400.814
+## 709     2265.400
+## 711     9847.168
+## 715     9546.977
+## 716     1994.574
+## 718     6259.404
+## 721     9914.875
+## 727     2419.984
+## 728     2081.451
+## 733     1810.625
+## 743     6259.404
+## 747     2197.694
+## 748     6346.282
+## 749     2333.107
+## 769     6394.817
+## 771     6007.749
+## 779     2032.916
+## 780     2197.694
+## 785     5485.267
+## 786    13502.639
+## 790     2062.281
+## 794    10388.821
+## 795     5688.386
+## 797    14315.118
+## 803    14315.118
+## 804     9847.168
+## 806    10253.408
+## 810     2333.107
+## 811     6026.919
+## 814    18376.829
+## 824     1878.332
+## 827     9914.875
+## 831     5823.800
+## 833     2333.107
+## 838     6259.404
+## 840    18512.242
+## 841     1926.867
+## 844     9914.875
+## 847     1994.574
+## 850     2284.571
+## 852     2603.933
+## 853     6259.404
+## 856     1994.574
+## 858     9730.926
+## 859     2400.814
+## 866     9982.582
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Find MSPE}
+\NormalTok{MSPE=}\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{Observed=}\NormalTok{test}\OperatorTok{$}\NormalTok{MonthlyIncome, }\DataTypeTok{Predicted=}\NormalTok{model1_preds)}
+\NormalTok{MSPE}\OperatorTok{$}\NormalTok{Residual=MSPE}\OperatorTok{$}\NormalTok{Observed}\OperatorTok{-}\NormalTok{MSPE}\OperatorTok{$}\NormalTok{Predicted}
+\NormalTok{MSPE}\OperatorTok{$}\NormalTok{SquaredResidual=MSPE}\OperatorTok{$}\NormalTok{Residual}\OperatorTok{^}\DecValTok{2}
+\CommentTok{#MSPE}
+
+\KeywordTok{mean}\NormalTok{(MSPE}\OperatorTok{$}\NormalTok{SquaredResidual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1930736
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#The cross-validation yeielded a very acceptable Root MSPE of 1,311--This fits our requirements}
+\end{Highlighting}
+\end{Shaded}
+
+\#Use the model to predict for the data set with no income figures
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Predict for No Salary CSV}
+
+\CommentTok{#Reset Datasets so they are same length}
+\CommentTok{#work=read.csv("C:/Users/seans/Desktop/DDS/Unit 14 and 15 Case Study 2/CaseStudy2-data.csv", header=TRUE, sep=",", stringsAsFactors = TRUE)}
+
+\CommentTok{#Upload No Salary CSV}
+\CommentTok{#Case2PredictionsSeanMcWhirter=read.csv("C:/Users/seans/Desktop/DDS/Unit 14 and 15 Case Study 2/CaseStudy2CompSetNoSalary.csv", header=TRUE, sep=",", stringsAsFactors = TRUE)}
+\CommentTok{#Case2PredictionsSeanMcWhirter$Attrition <- as.integer(Case2PredictionsSeanMcWhirter$Attrition)}
+\CommentTok{#Case2PredictionsSeanMcWhirter$JobRole <- as.integer(Case2PredictionsSeanMcWhirter$JobRole)}
+\CommentTok{#Case2PredictionsSeanMcWhirter$OverTime <- as.integer(Case2PredictionsSeanMcWhirter$OverTime)}
+\CommentTok{#Case2PredictionsSeanMcWhirter$BusinessTravel <- as.integer(Case2PredictionsSeanMcWhirter$BusinessTravel)}
+\CommentTok{#Case2PredictionsSeanMcWhirter$Department <- as.integer(Case2PredictionsSeanMcWhirter$Department)}
+\CommentTok{#Case2PredictionsSeanMcWhirter$EducationField <- as.integer(Case2PredictionsSeanMcWhirter$EducationField)}
+\CommentTok{#Case2PredictionsSeanMcWhirter$MaritalStatus <- as.integer(Case2PredictionsSeanMcWhirter$MaritalStatus)}
+\CommentTok{#Case2PredictionsSeanMcWhirter$OverTime <- as.integer(Case2PredictionsSeanMcWhirter$OverTime)}
+\CommentTok{#Case2PredictionsSeanMcWhirter$Gender <- as.integer(Case2PredictionsSeanMcWhirter$Gender)}
+\CommentTok{#Use model to make predictions}
+\CommentTok{#model1_fit=lm(MonthlyIncome~JobLevel+TotalWorkingYears+BusinessTravel, data=train)}
+\CommentTok{#Predictions=predict(model1_fit, newdata=Case2PredictionsSeanMcWhirter)}
+\CommentTok{#Case2PredictionsSeanMcWhirter<-data.frame(ID=Case2PredictionsSeanMcWhirter$ID, Predicted_Income=Predictions)}
+
+\CommentTok{#Write predicitons to CSV for submission}
+\CommentTok{#write.csv(Case2PredictionsSeanMcWhirter, file="Case2Predictions_SeanMcWhirter.csv", row.names = FALSE)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}
